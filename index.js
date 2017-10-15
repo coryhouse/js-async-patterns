@@ -1,15 +1,19 @@
-// getPostsCallback(function(posts) {
+// getPostsCallback( posts => {
 //   posts.map( post => console.log(post));
 // });
 
-getPostsPromise().then( posts => {
- console.log(posts.length);
+// getPostsPromise().then( posts => {
+//  console.log(posts.length);
+// });
+
+getPostsAsync().then(posts => {
+    debugger;
+    console.log(posts.length);
 });
 
 // function getPostsCallback(callback) {
-//   return fetch("https://jsonplaceholder.typicode.com/posts")
+//   fetch("https://jsonplaceholder.typicode.com/posts")
 //   .then(response => {
-//     debugger;
 //     callback(response.json());
 //   })
 //   .catch( error => console.log(error));
@@ -23,10 +27,11 @@ function getPostsPromise() {
   .catch( error => console.log(error));
 }
 
-// async function getPostsAsync() {
-//   await fetch("https://jsonplaceholder.typicode.com/posts")
-//   .then(response => {
-//     return response.json();
-//   })
-//   .catch( error => console.log(error));
-// }
+async function getPostsAsync() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    return response.json();
+  } catch(error) {
+    console.log(error);
+  }
+}
