@@ -1,23 +1,34 @@
-// getPostsCallback( posts => {
-//   posts.map( post => console.log(post));
-// });
+getPostsCallback(function(error, posts) {
+  if (error) {
+      console.log(error);
+  } else {
+      console.log(posts.length);
+  }
+});
 
-// getPostsPromise().then( posts => {
-//  console.log(posts.length);
-// });
+getPostsPromise().then( posts => {
+ console.log(posts.length);
+});
 
 getPostsAsync().then(posts => {
-    debugger;
     console.log(posts.length);
 });
 
-// function getPostsCallback(callback) {
-//   fetch("https://jsonplaceholder.typicode.com/posts")
-//   .then(response => {
-//     callback(response.json());
-//   })
-//   .catch( error => console.log(error));
-// }
+function getPostsCallback(callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            callback(null, xhr.response);
+        }
+    }
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/posts");
+    try {
+        xhr.send();
+    } catch (error) {
+        callback(error);
+    }
+}
 
 function getPostsPromise() {
   return fetch("https://jsonplaceholder.typicode.com/posts")
